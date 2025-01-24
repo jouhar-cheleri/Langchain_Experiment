@@ -1,0 +1,9 @@
+flask
+python-dotenv
+langchain
+langchain-google-genai
+langgraph
+serpapi
+sqlite3
+tavily-python
+gunicorn
