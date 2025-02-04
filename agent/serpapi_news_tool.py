@@ -1,6 +1,6 @@
 from typing import Optional
 from langchain_core.tools import BaseTool
-from serpapi import GoogleSearch
+from serpapi.google_search import GoogleSearch
 from pydantic import PrivateAttr
 import os
 
