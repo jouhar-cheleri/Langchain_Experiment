@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 300px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>News Search</h1>
+    <form method="POST">
+        <input type="text" name="query" placeholder="Enter your query">
+        <button type="submit">Search</button>
+    </form>
+    {% if results %}
+        <h2>Results:</h2>
+        <table>
+            <tr>
+                <th>Sl. No</th>
+                <th>Title</th>
+                <th>Link</th>
+                <th>Snippet</th>
+            </tr>
+            {% for i, result in enumerate(results) %}
+                <tr>
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ result.title }}</td>
+                    <td><a href="{{ result.link }}" target="_blank">{{ result.link }}</a></td>
+                    <td>{{ result.snippet }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
