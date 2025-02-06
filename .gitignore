@@ -1,1 +1,28 @@
+# Environment files
 .env
+*.env
+
+# Database files
+*.db
+news.db
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# IDE specific files
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Flask session files
+flask_session/

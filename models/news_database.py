@@ -43,8 +43,8 @@ class NewsDatabase:
             cursor = conn.cursor()
             cursor.execute("DELETE FROM News")
             conn.commit()
-    def get_news_by_slno(self, slno: int) -> Tuple:
-        with sqlite3.connect(self.db_name) as conn:
-            cursor = conn.cursor()
-            cursor.execute("SELECT * FROM News WHERE Slno = ?", (slno,))
-            return cursor.fetchone()
+    # def get_news_by_slno(self, slno: int) -> Tuple:
+    #     with sqlite3.connect(self.db_name) as conn:
+    #         cursor = conn.cursor()
+    #         cursor.execute("SELECT * FROM News WHERE Slno = ?", (slno,))
+    #         return cursor.fetchone()
