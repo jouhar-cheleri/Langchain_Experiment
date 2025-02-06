@@ -1,19 +1,19 @@
-services:
-  - type: web
-    name: news-search-app
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn run:app"
-    envVars:
-      - key: LANGSMITH_TRACING
-        value: true
-      - key: LANGSMITH_API_KEY
-        fromDatabase: LANGSMITH_API_KEY
-      - key: TAVILY_API_KEY
-        fromDatabase: TAVILY_API_KEY
-      - key: Gemini_Api_Key
-        fromDatabase: Gemini_Api_Key
-      - key: serp_api_key
-        fromDatabase: serp_api_key
-      - key: SECRET_KEY
-        fromDatabase: SECRET_KEY
+# services:
+#   - type: web
+#     name: news-search-app
+#     env: python
+#     buildCommand: "pip install -r requirements.txt"
+#     startCommand: "gunicorn run:app"
+#     envVars:
+#       - key: LANGSMITH_TRACING
+#         value: true
+#       - key: LANGSMITH_API_KEY
+#         fromDatabase: LANGSMITH_API_KEY
+#       - key: TAVILY_API_KEY
+#         fromDatabase: TAVILY_API_KEY
+#       - key: Gemini_Api_Key
+#         fromDatabase: Gemini_Api_Key
+#       - key: serp_api_key
+#         fromDatabase: serp_api_key
+#       - key: SECRET_KEY
+#         fromDatabase: SECRET_KEY
