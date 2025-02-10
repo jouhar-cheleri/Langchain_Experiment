@@ -14,7 +14,8 @@ class NewsDatabase:
                     Slno INTEGER PRIMARY KEY AUTOINCREMENT,
                     Title TEXT NOT NULL,
                     Link TEXT NOT NULL,
-                    Snippet TEXT
+                    Snippet TEXT,
+                    content TEXT
                 )
             ''')
             conn.commit()

@@ -1,85 +1,7 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Search</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            width: 300px;
-            margin-right: 10px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        table {
-            width: 80%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
-    <h1>News Search</h1>
-    <form method="POST">
-        <input type="text" name="query" placeholder="Enter your query">
-        <button type="submit">Search</button>
-    </form>
-    {% if results %}
-        <h2>Results:</h2>
-        <table>
-            <tr>
-                <th>Sl. No</th>
-                <th>Title</th>
-                <th>Link</th>
-                <th>Snippet</th>
-            </tr>
-            {% for i, result in enumerate(results) %}
-                <tr>
-                    <td>{{ i + 1 }}</td>
-                    <td>{{ result.title }}</td>
-                    <td><a href="{{ result.link }}" target="_blank">{{ result.link }}</a></td>
-                    <td>{{ result.snippet }}</td>
-                </tr>
-            {% endfor %}
-        </table>
-    {% endif %}
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chat with AI</title>
+    <title>AI News Assistant</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -101,7 +23,7 @@
         }
         .message {
             margin: 10px 0;
-            max-width: 70%;
+            max-width: 80%;
             padding: 10px 15px;
             border-radius: 15px;
             word-wrap: break-word;
@@ -118,6 +40,29 @@
             margin-right: auto;
             border-bottom-left-radius: 5px;
         }
+        .news-item {
+            border: 1px solid #dee2e6;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: white;
+        }
+        .news-title {
+            color: #1a73e8;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .news-link {
+            color: #1e7e34;
+            text-decoration: none;
+            font-size: 0.9em;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .news-snippet {
+            color: #666;
+            font-size: 0.9em;
+        }
         .input-form {
             padding: 20px;
             border-top: 1px solid #dee2e6;
@@ -126,18 +71,21 @@
         }
         .input-form input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #dee2e6;
             border-radius: 20px;
             outline: none;
+            font-size: 16px;
         }
         .input-form button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: #0084ff;
             color: white;
             border: none;
             border-radius: 20px;
             cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
         }
         .input-form button:hover {
             background: #0073e6;
@@ -154,7 +102,18 @@
         <div class="chat-box" id="chatBox">
             {% for message in messages %}
                 <div class="message {% if message.role == 'user' %}user-message{% else %}assistant-message{% endif %}">
-                    {{ message.content }}
+                    {% if message.role == 'assistant' and message.news_results %}
+                        {{ message.content }}
+                        {% for news in message.news_results %}
+                            <div class="news-item">
+                                <div class="news-title">{{ news.title }}</div>
+                                <a href="{{ news.link }}" target="_blank" class="news-link">Read More →</a>
+                                <div class="news-snippet">{{ news.snippet }}</div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        {{ message.content }}
+                    {% endif %}
                     <div class="timestamp">
                         {{ message.timestamp if message.timestamp else '' }}
                     </div>
@@ -162,7 +121,7 @@
             {% endfor %}
         </div>
         <form method="POST" class="input-form">
-            <input type="text" name="query" placeholder="Type your message..." required>
+            <input type="text" name="query" placeholder="Ask me about news..." required autofocus>
             <button type="submit">Send</button>
         </form>
     </div>
@@ -170,6 +129,16 @@
         // Auto-scroll to bottom
         const chatBox = document.getElementById('chatBox');
         chatBox.scrollTop = chatBox.scrollHeight;
+        
+        // Auto-scroll on new messages
+        const observer = new MutationObserver(() => {
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+        
+        observer.observe(chatBox, {
+            childList: true,
+            subtree: true
+        });
     </script>
 </body>
 </html>

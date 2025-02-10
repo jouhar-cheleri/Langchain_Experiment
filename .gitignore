@@ -26,3 +26,5 @@ Thumbs.db
 
 # Flask session files
 flask_session/
+
+newspapertest.py
